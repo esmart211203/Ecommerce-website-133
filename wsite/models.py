@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to="category", blank=True)
-    description = models.TextField()
+    description = models.TextField(default="")
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

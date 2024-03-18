@@ -1,0 +1,44 @@
+{% extends "../base_admin.html" %}
+{% block title %}Order page{% endblock title %}
+{% block content %}
+<h1 class="text-center">Order management</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">User</th>
+        <th scope="col">Address</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Total amount</th>
+        <th scope="col">Status</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for data in orders %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{data.user}} </td>
+          <td>{{data.address}}</td>
+          <td>{{data.phone}}</td>
+          <td>$ {{data.total_amount}}</td>
+          <td>{{data.status}} 
+            {% if data.status == 'Processing' %}
+              <a href="{% url "order.completed" data.id %}"><i class="fa-solid fa-circle-check"></i></a>
+            {% endif %}
+          </td>
+          <td>
+            <form method="POST" action="{% url "order.delete" data.id %}">
+              {% csrf_token %}
+                <a href="{% url "order.detail" data.id %}"><i class="fa-solid fa-eye"></i></a>
+                <button style="color: red;
+                border: none;" type="submit" class="fa-solid fa-trash"></button>
+              </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url "product.create" %}" class="btn btn-primary">Create</a>
+{% endblock content %}

@@ -8,24 +8,27 @@
         <th scope="col">STT</th>
         <th scope="col">username</th>
         <th scope="col">email</th>
-        <th scope="col">photo</th>
         <th scope="col">role</th>
         <th scope="col">Handle</th>
       </tr>
     </thead>
 
     <tbody>
+      {% for data in users %}
       <tr>
         <th scope="row">1</th>
-        <td>Esmart211203</td>
-        <td>Esmart211203@gmail.com</td>
-        <td>image</td>
-        <td>ADMIN</td>
+        <td>{{data.username}}</td>
+        <td>{{data.email}}</td>
+        <td>{{data.is_superuser}}</td>
         <td>
-            <a class="btn btn-info">edit</a>
-            <a class="btn btn-danger">delete</a>
+          <form method="POST" action="{% url "user.delete" data.id %}">
+            {% csrf_token %}
+              <a class="btn btn-info" href="#">edit</a>
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
         </td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 {% endblock content %}

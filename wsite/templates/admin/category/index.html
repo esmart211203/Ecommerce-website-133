@@ -14,18 +14,24 @@
     </thead>
 
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Cate 1</td>
-        <td>image</td>
-        <td>
-            desc ........
-        </td>
-        <td>
-            <a class="btn btn-info">edit</a>
-            <a class="btn btn-danger">delete</a>
-        </td>
-      </tr>
+      {% if categories|length > 0 %}
+        {% for data in  categories %}
+          <tr>
+            <th scope="row">1</th>
+            <td>{{data.name}}</td>
+            <td><img src="media/{{ data.image }}" alt="Ảnh" width="50px"></td>
+            <td>{{data.description}}</td>
+            <td>
+              <form method="POST" action="{% url "category.delete" category_id=data.id %}">
+                {% csrf_token %}
+                  <a class="btn btn-info" href="{% url "category.edit" data.id %}">edit</a>
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+          </tr>
+        {% endfor %}
+      {% endif %}
     </tbody>
   </table>
+  <a href="{% url "category.create" %}" class="btn btn-primary">Create</a>
 {% endblock content %}

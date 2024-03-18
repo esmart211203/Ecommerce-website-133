@@ -1,0 +1,27 @@
+{% extends "../base_admin.html" %}
+{% block title %}Product page{% endblock title %}
+{% block content %}
+<h1 class="text-center">Detail order</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Created</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for data in order_items %}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{data.product}} </td>
+                <td>{{data.quantity}}</td>
+                <td>{{data.price}}</td>
+                <td>{{data.created_at}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -16,20 +16,24 @@
     </thead>
 
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Pro 1</td>
-        <td>T-shirt</td>
-        <td>image</td>
-        <td>$ 500</td>
-        <td>
-            desc ........
-        </td>
-        <td>
-            <a class="btn btn-info">edit</a>
-            <a class="btn btn-danger">delete</a>
-        </td>
-      </tr>
+      {% for pro in products %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{pro.name}}</td>
+          <td>{{pro.category}}</td>
+          <td>image</td>
+          <td>$ {{pro.price}}</td>
+          <td>{{pro.description}}</td>
+          <td>
+            <form method="POST" action="{% url "product.delete" product_id=pro.id %}">
+              {% csrf_token %}
+                <a class="btn btn-info" href="{% url "product.edit" pro.id %}">edit</a>
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+          </td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
+  <a href="{% url "product.create" %}" class="btn btn-primary">Create</a>
 {% endblock content %}
