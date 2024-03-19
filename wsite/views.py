@@ -12,15 +12,20 @@ from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.conf import settings
+from django.db.models import Q
+
 ######## FRONT-END #######
 def index(request):
     categories = Category.objects.all()[:4]
+    products = Product.objects.all()[:4]
     context = {
         'categories': categories,
+        'products': products,
     }
     return render(request, 'index.html', context)
 
 def shop_view(request):
+    
         categories = Category.objects.all()
         products = Product.objects.all()
         context = {
@@ -245,7 +250,8 @@ def delete_user(request, user_id):
 def cart_view(request):
     user = request.user
     cart_items = CartItem.objects.filter(user=user)
-    return render(request, 'cart.html', context={'cart_items': cart_items})
+    total_cart = CartItem.calculate_total_cart(user)
+    return render(request, 'cart.html', context={'cart_items': cart_items, 'total_cart': total_cart})
 
 @login_required
 def add_to_cart(request, product_id):
@@ -306,3 +312,28 @@ def delete_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     order.delete()
     return redirect("order.index")
+
+def about_page(request):
+    return render(request, 'about.html')
+
+def contact_page(request):
+    return render(request, 'contact.html')
+
+def search(request):
+    keyword = request.GET.get('keyword', '')
+
+    if keyword:
+        results = Product.objects.filter(
+            Q(name__icontains=keyword) |
+            Q(description__icontains=keyword) |
+            Q(name__icontains=keyword.replace(' ', '%')) |
+            Q(description__icontains=keyword.replace(' ', '%'))
+        )
+    else:
+        results = []
+    return render(request, 'search.html', {'results': results, 'keyword': keyword})
+
+@login_required
+def profile(request):
+    user = request.user
+    return render(request, 'profile.html',context={'user':user})

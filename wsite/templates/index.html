@@ -7,21 +7,7 @@
 <!-- Close Header -->
 
 <!-- Modal -->
-<div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="w-100 pt-1 mb-5 text-right">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="" method="get" class="modal-content modal-body border-0 p-0">
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                <button type="submit" class="input-group-text bg-success text-light">
-                    <i class="fa fa-fw fa-search text-white"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+
 
 
 
@@ -115,13 +101,38 @@
             </p>
         </div>
     </div>
+    <style>
+        .image-container {
+            width: 200px; /* Đặt chiều rộng ảnh */
+            height: 200px; /* Đặt chiều cao ảnh */
+            overflow: hidden; /* Ẩn phần dư thừa nếu ảnh lớn hơn kích thước container */
+            position: relative; /* Đặt vị trí tương đối cho việc căn chỉnh ảnh */
+        }
+    
+        .image-container img {
+            width: 100%; /* Chiếm toàn bộ chiều rộng của container */
+            height: auto; /* Duy trì tỷ lệ khung hình */
+            position: absolute; /* Đặt vị trí tuyệt đối để căn giữa ảnh */
+            top: 50%; /* Di chuyển ảnh lên trên 50% container */
+            left: 50%; /* Di chuyển ảnh sang trái 50% container */
+            transform: translate(-50%, -50%); /* Dịch chuyển ảnh để căn giữa */
+        }
+        .col-12 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
     <div class="row">
         {% for cate in  categories %}
         <div class="col-12 col-md-4 p-5 mt-3">
-            <a href="#"><img src="{% static "img/category_img_01.jpg" %}" class="rounded-circle img-fluid border"></a>
+            <div class="image-container">
+                <a href="#"><img src="media/{{cate.image}}" class="rounded-circle img-fluid border"></a>
+            </div>
             <h5 class="text-center mt-3 mb-3">{{cate.name}}</h5>
-            <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-        </div>
+            <p class="text-center"><a class="btn btn-success" href="{% url "shop.category" cate.id %}">Go Shop</a></p>
+        </div>      
         {% endfor %}
     </div>
 </section>
@@ -141,10 +152,14 @@
             </div>
         </div>
         <div class="row">
+            {% for data in products %}
             <div class="col-12 col-md-4 mb-4">
                 <div class="card h-100">
-                    <a href="shop-single.html">
-                        <img src="{% static "img/feature_prod_01.jpg" %}" class="card-img-top" alt="...">
+                    <a href="{% url "product.detail" data.id %}">
+                        <img src="{{data.image.url}}" class="card-img-top" style="    
+                        object-fit: cover;
+                        height: 400px;
+                        width: 400px;" alt="...">
                     </a>
                     <div class="card-body">
                         <ul class="list-unstyled d-flex justify-content-between">
@@ -155,64 +170,16 @@
                                 <i class="text-muted fa fa-star"></i>
                                 <i class="text-muted fa fa-star"></i>
                             </li>
-                            <li class="text-muted text-right">$240.00</li>
+                            <li class="text-muted text-right">$ {{data.price}}</li>
                         </ul>
-                        <a href="shop-single.html" class="h2 text-decoration-none text-dark">Gym Weight</a>
+                        <a href="shop-single.html" class="h2 text-decoration-none text-dark">{{data.name}}</a>
                         <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
+                           {{data.description}}
                         </p>
-                        <p class="text-muted">Reviews (24)</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 mb-4">
-                <div class="card h-100">
-                    <a href="shop-single.html">
-                        <img src="{% static "img/feature_prod_02.jpg" %}" class="card-img-top" alt="...">
-                    </a>
-                    <div class="card-body">
-                        <ul class="list-unstyled d-flex justify-content-between">
-                            <li>
-                                <i class="text-warning fa fa-star"></i>
-                                <i class="text-warning fa fa-star"></i>
-                                <i class="text-warning fa fa-star"></i>
-                                <i class="text-muted fa fa-star"></i>
-                                <i class="text-muted fa fa-star"></i>
-                            </li>
-                            <li class="text-muted text-right">$480.00</li>
-                        </ul>
-                        <a href="shop-single.html" class="h2 text-decoration-none text-dark">Cloud Nike Shoes</a>
-                        <p class="card-text">
-                            Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.
-                        </p>
-                        <p class="text-muted">Reviews (48)</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 mb-4">
-                <div class="card h-100">
-                    <a href="shop-single.html">
-                        <img src="{% static "img/feature_prod_03.jpg" %}" class="card-img-top" alt="...">
-                    </a>
-                    <div class="card-body">
-                        <ul class="list-unstyled d-flex justify-content-between">
-                            <li>
-                                <i class="text-warning fa fa-star"></i>
-                                <i class="text-warning fa fa-star"></i>
-                                <i class="text-warning fa fa-star"></i>
-                                <i class="text-warning fa fa-star"></i>
-                                <i class="text-warning fa fa-star"></i>
-                            </li>
-                            <li class="text-muted text-right">$360.00</li>
-                        </ul>
-                        <a href="shop-single.html" class="h2 text-decoration-none text-dark">Summer Addides Shoes</a>
-                        <p class="card-text">
-                            Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.
-                        </p>
-                        <p class="text-muted">Reviews (74)</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

@@ -10,9 +10,9 @@
             <ul class="list-unstyled templatemo-accordion">
                 {% for cate_shop in categories %}
                 <li class="pb-3">
-                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{% url "shop.category" cate_shop.id %}">
+                    <a href="{% url 'shop.category' cate_shop.id %}" class="collapsed d-flex justify-content-between h3 text-decoration-none">
                         {{cate_shop.name}}
-                        <i class="fa-solid fa-forward"></i>
+                        {% comment %} <i class="fa-solid fa-forward"></i> {% endcomment %}
                     </a>
                 </li>
                 {% endfor %}
@@ -25,10 +25,10 @@
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="{{MEDIA_URL}}{{product.image}}" style="height: 300px;">
+                            <img class="card-img rounded-0 img-fluid" src="{{data.image.url}}" style="height: 300px;">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href=""><i class="far fa-heart"></i></a></li>
+                                    {% comment %} <li><a class="btn btn-success text-white" href=""><i class="far fa-heart"></i></a></li> {% endcomment %}
                                     <li><a class="btn btn-success text-white mt-2" href="{% url "product.detail" data.id %}"><i class="far fa-eye"></i></a></li>
                                     <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
                                 </ul>

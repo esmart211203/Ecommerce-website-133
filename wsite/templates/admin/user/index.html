@@ -1,7 +1,7 @@
 {% extends "../base_admin.html" %}
 {% block title %}User page{% endblock title %}
 {% block content %}
-<h1 class="text-center">User management</h1>
+<h1 class="text-center" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">User management</h1>
 <table class="table">
     <thead>
       <tr>
@@ -19,11 +19,19 @@
         <th scope="row">1</th>
         <td>{{data.username}}</td>
         <td>{{data.email}}</td>
-        <td>{{data.is_superuser}}</td>
+        <td>
+          <span class="d-inline-block bg-primary text-white p-2 rounded">
+            {% if data.is_superuser %}
+              admin
+            {% else %}
+              customer
+            {% endif %}
+          </span>
+        </td>
         <td>
           <form method="POST" action="{% url "user.delete" data.id %}">
             {% csrf_token %}
-              <a class="btn btn-info" href="#">edit</a>
+              {% comment %} <a class="btn btn-info" href="#">edit</a> {% endcomment %}
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </td>

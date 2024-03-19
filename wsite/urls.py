@@ -4,15 +4,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path("", views.index, name="index"),
+    path("about", views.about_page, name="about"),
+    path("contact", views.contact_page, name="contact"),
     path("shop", views.shop_view, name="shop.index"),
     path("shop-category/<int:category_id>", views.shop_category, name="shop.category"),
-
+    path("search", views.search, name="search"),
+    path("profile", views.profile, name="profile"),
     #### CART & ORDER ####
     path("order", views.order_view, name="order.index"),
     path("order-detail/<int:order_id>", views.order_detail, name="order.detail"),
     path("order-completed/<int:order_id>", views.order_completed, name="order.completed"),
     path("delete-order/<int:order_id>", views.delete_order, name="order.delete"),
-    path("/cart", views.cart_view, name="cart"),
+    path("cart", views.cart_view, name="cart"),
     path("add-to-cart/<int:product_id>", views.add_to_cart, name="cart.store"),
     path("check-out", views.checkout, name="checkout"),
     #### ADMIN ####

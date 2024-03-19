@@ -8,13 +8,13 @@
         <div class="col-lg-3">
             <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
-                {% for cate_shop in categories %}
-                <li class="pb-3">
-                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{% url "shop.category" cate_shop.id %}">
-                        {{cate_shop.name}}
-                        <i class="fa-solid fa-forward"></i>
-                    </a>
-                </li>
+                {% for data in categories %}
+                    <li class="pb-3">
+                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{% url 'shop.category' data.id %}">
+                            {{data.name}}
+                            <i class="fa-solid fa-forward"></i>
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>
@@ -28,7 +28,7 @@
                             <img class="card-img rounded-0 img-fluid" src="media/{{data.image}}" style="height: 300px;">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href=""><i class="far fa-heart"></i></a></li>
+                                    {% comment %} <li><a class="btn btn-success text-white" href=""><i class="far fa-heart"></i></a></li> {% endcomment %}
                                     <li><a class="btn btn-success text-white mt-2" href="{% url "product.detail" data.id %}"><i class="far fa-eye"></i></a></li>
                                     <li><a class="btn btn-success text-white mt-2" href="{% url "cart.store" data.id %}"><i class="fas fa-cart-plus"></i></a></li>
                                 </ul>
