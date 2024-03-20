@@ -16,8 +16,8 @@ from django.db.models import Q
 
 ######## FRONT-END #######
 def index(request):
-    categories = Category.objects.all()[:4]
-    products = Product.objects.all()[:4]
+    categories = Category.objects.all()[:3]
+    products = Product.objects.all()[:3]
     context = {
         'categories': categories,
         'products': products,
@@ -254,6 +254,12 @@ def cart_view(request):
     return render(request, 'cart.html', context={'cart_items': cart_items, 'total_cart': total_cart})
 
 @login_required
+def checkout_info(request):
+    user = request.user
+    total_cart = CartItem.calculate_total_cart(user)
+    return render(request, 'checkout_info.html', context={'total_cart': total_cart})
+
+@login_required
 def add_to_cart(request, product_id):
     user = request.user
     product = get_object_or_404(Product, pk=product_id)
@@ -276,7 +282,7 @@ def checkout(request):
         full_name=full_name,
         address=address,
         phone=phone,
-        total_amount=0  # Sẽ cập nhật giá trị sau
+        total_amount=0  
     )
 
     # Lấy danh sách các mục trong giỏ hàng của người dùng
@@ -337,3 +343,28 @@ def search(request):
 def profile(request):
     user = request.user
     return render(request, 'profile.html',context={'user':user})
+
+def delete_cart_item(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    return redirect("cart")
+
+
+def increase_quantity(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect("cart")
+
+
+def decrease_quantity(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    return redirect("cart")
+

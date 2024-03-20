@@ -16,7 +16,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     image = models.ImageField(upload_to="product", blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,7 +35,10 @@ class CartItem(models.Model):
         cart_items = CartItem.objects.filter(user=user)
         total_price = sum(item.product.price * item.quantity for item in cart_items)
         return total_price
-    
+    @staticmethod
+    def count_cart_items(user):
+        count = CartItem.objects.filter(user=user).count()
+        return count
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)

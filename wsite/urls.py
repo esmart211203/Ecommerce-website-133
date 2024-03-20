@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from .templatetags import cart_tags
 urlpatterns = [
     path("", views.index, name="index"),
     path("about", views.about_page, name="about"),
@@ -17,7 +18,11 @@ urlpatterns = [
     path("delete-order/<int:order_id>", views.delete_order, name="order.delete"),
     path("cart", views.cart_view, name="cart"),
     path("add-to-cart/<int:product_id>", views.add_to_cart, name="cart.store"),
+    path("delete-cart-item/<int:item_id>", views.delete_cart_item, name="cart.delete"),
+    path("increase-quantity/<int:item_id>", views.increase_quantity, name="increase.quantity"),
+    path("decrease-quantity/<int:item_id>", views.decrease_quantity, name="decrease.quantity"),
     path("check-out", views.checkout, name="checkout"),
+    path("checkout-info", views.checkout_info, name="checkout-info"),
     #### ADMIN ####
     path("view-admin", views.admin_view, name="admin"),
     ### CATEGORY ###
