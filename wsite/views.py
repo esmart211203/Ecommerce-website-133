@@ -368,3 +368,26 @@ def decrease_quantity(request, item_id):
         cart_item.save()
     return redirect("cart")
 
+
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+
+
+def change_password(request):
+    if request.method == 'POST':
+        old_password = request.POST.get('old-password')
+        new_password = request.POST.get('new-password')
+        confirm_pass = request.POST.get('confirm-password')
+        user = request.user
+
+        if user.check_password(old_password) and new_password == confirm_pass:
+            user.set_password(new_password)
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Mật khẩu đã được thay đổi thành công!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Thay đổi không thành công.')
+            return redirect('profile')
+
+    return redirect("profile")

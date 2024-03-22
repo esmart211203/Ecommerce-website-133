@@ -11,6 +11,7 @@ urlpatterns = [
     path("shop-category/<int:category_id>", views.shop_category, name="shop.category"),
     path("search", views.search, name="search"),
     path("profile", views.profile, name="profile"),
+    path("change-password", views.change_password, name="change-password"),
     #### CART & ORDER ####
     path("order", views.order_view, name="order.index"),
     path("order-detail/<int:order_id>", views.order_detail, name="order.detail"),
