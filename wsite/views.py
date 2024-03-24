@@ -305,8 +305,8 @@ def checkout(request):
 
     # Xóa các mục trong giỏ hàng của người dùng
     cart_items.delete()
-
-    return redirect("cart")
+    request.session['checkout_success'] = True
+    return redirect("index")
 
 def order_completed(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
