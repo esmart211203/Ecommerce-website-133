@@ -15,8 +15,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
         <style>
             #toast{
-                {% comment %} display: none; {% endcomment %}
-                position: fixed;
+                position: absolute;
                 top: 32px;
                 right: 32px;
             }
@@ -158,7 +157,42 @@
                 </form>
             </div>
         </div>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div id="toast">
+                        <div class="toast toast_success">
+                            <div class="toast__icon"><i class="fa-regular fa-circle-check"></i></div>
+                            <div class="toast__body">
+                                <div class="toast__title">Success</div>
+                                <p class="toast__msg">{{ message }}</p>
+                            </div>
+                            <div class="toast__close"><i class="fa-solid fa-circle-xmark"></i></div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         {% block content %}{% endblock content %}
+        <script>
+
+            document.addEventListener("DOMContentLoaded", function() {
+                var toast = document.getElementById("toast");
+                if (toast) {
+                    setTimeout(function() {
+                        toast.remove();
+                    }, 3000);
+                }
+            });
+            
+            function confirmCheckout() {
+                if (confirm("Xác thực để tiếp tục?")) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+        </script>
         <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
         <script src="{% static "js/templatemo.js" %}"></script>
         <script src="{% static "js/custom.js" %}"></script>
